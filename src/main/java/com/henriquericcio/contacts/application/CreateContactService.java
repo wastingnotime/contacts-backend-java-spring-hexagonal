@@ -6,8 +6,10 @@ import com.henriquericcio.contacts.outbound.SaveContact;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
+@Transactional
 @RequiredArgsConstructor
 public class CreateContactService implements CreateContactUseCase {
     private final SaveContact saveContact;
