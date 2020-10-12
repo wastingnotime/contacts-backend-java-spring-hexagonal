@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -31,11 +33,11 @@ public class CreateContactServiceTest {
     @Test
     public void given_valid_command_should_save_contact_with_id(){
         val command = new CreateContactUseCase.CreateContactCommand("first", "last","0000-0000");
-
         val contactId = createContactService.create(command);
 
         assertThat(contactId).isNotNull();
         assertThat(contactId.getValue()).isNotNull();
+        assertThat(UUID.fromString(contactId.getValue())).isNotNull();
 
         verify(saveContact, times(1)).save(any());
     }
