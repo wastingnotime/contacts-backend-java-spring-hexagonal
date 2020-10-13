@@ -26,8 +26,8 @@ public class ContactEntity {
         return new ContactEntity(
                 contact.getId().getValue(),
                 contact.getFirstName(),
-                contact.getLastName(),
-                contact.getPhoneNumber()
+                contact.getPhoneNumber(),
+                contact.getLastName()
         );
     }
 }
