@@ -1,6 +1,7 @@
 package com.henriquericcio.contacts.application;
 
 import com.henriquericcio.contacts.inbound.CreateContactUseCase;
+import com.henriquericcio.contacts.outbound.AdviceExternalSystem;
 import com.henriquericcio.contacts.outbound.SaveContact;
 import lombok.val;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,9 @@ public class CreateContactServiceTest {
     @Mock
     SaveContact saveContact;
 
+    @Mock
+    AdviceExternalSystem adviceExternalSystem;
+
     @Test
     public void given_null_command_should_returns_exception(){
         assertThatThrownBy(() -> createContactService.create(null)).isInstanceOf(NullPointerException.class);
@@ -40,5 +44,6 @@ public class CreateContactServiceTest {
         assertThat(UUID.fromString(contactId.getValue())).isNotNull();
 
         verify(saveContact, times(1)).save(any());
+        verify(adviceExternalSystem, times(1)).tell(any());
     }
 }
