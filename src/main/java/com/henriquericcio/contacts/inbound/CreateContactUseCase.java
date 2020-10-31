@@ -21,6 +21,7 @@ public interface CreateContactUseCase {
             this.firstName = firstName;
             this.lastName = lastName;
             this.phoneNumber = phoneNumber;
+            //TODO: try AOP
             this.validateSelf();
         }
     }
