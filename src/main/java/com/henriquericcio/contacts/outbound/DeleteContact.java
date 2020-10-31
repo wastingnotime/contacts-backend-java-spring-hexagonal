@@ -1,9 +1,7 @@
 package com.henriquericcio.contacts.outbound;
 
-
 import com.henriquericcio.contacts.entities.Contact;
 
-public interface SaveContact {
-    void save(Contact contact);
+public interface DeleteContact {
+    void delete(Contact.ContactId contactId);
 }
-

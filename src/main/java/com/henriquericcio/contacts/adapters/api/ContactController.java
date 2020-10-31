@@ -1,14 +1,15 @@
 package com.henriquericcio.contacts.adapters.api;
 
 import com.henriquericcio.contacts.inbound.CreateContactUseCase;
+import com.henriquericcio.contacts.inbound.DeleteContactUseCase;
+import com.henriquericcio.contacts.inbound.UpdateContactUseCase;
+import com.henriquericcio.contacts.inbound.common.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -18,13 +19,59 @@ import java.net.URI;
 @RequiredArgsConstructor
 public class ContactController {
     private final CreateContactUseCase createContactUseCase;
+    private final DeleteContactUseCase deleteContactUseCase;
+    private final UpdateContactUseCase updateContactUseCase;
+    private final ContactRepository2 contactRepository2;
 
     @PostMapping
     public ResponseEntity<?> addContact(@RequestBody ContactPayload contact) {
-        log.info("Receiving payload {}",contact);
+        log.info("Receiving payload {}", contact);
 
         val command = new CreateContactUseCase.CreateContactCommand(contact.getFirstName(), contact.getLastName(), contact.getPhoneNumber());
         val contactId = createContactUseCase.create(command);
         return ResponseEntity.created(URI.create("/" + contactId.getValue())).build();
+    }
+
+    @SneakyThrows
+    @PutMapping(path = "{id}")
+    public ResponseEntity<?> updateContact(@PathVariable("id") String id, @RequestBody ContactPayload contact) {
+
+        val command = new UpdateContactUseCase.UpdateContactCommand(id, contact.getFirstName(), contact.getLastName(), contact.getPhoneNumber());
+
+        try {
+            updateContactUseCase.update(command);
+        } catch (NotFoundException e) {
+            throw new com.henriquericcio.contacts.adapters.api.NotFoundException();
+        }
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @SneakyThrows
+    @DeleteMapping(path = "{id}")
+    public ResponseEntity<?> deleteContact(@PathVariable("id") String id) {
+
+        try {
+            deleteContactUseCase.delete(new DeleteContactUseCase.DeleteContactCommand(id));
+        } catch (NotFoundException e) {
+            throw new com.henriquericcio.contacts.adapters.api.NotFoundException();
+        }
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public Iterable<Contact> getAllContacts() {
+        return contactRepository2.findAll();
+    }
+
+    @SneakyThrows
+    @GetMapping(path = "{id}")
+    public Contact getContactById(@PathVariable("id") String id) {
+        val contact = contactRepository2.findById(id);
+        if (contact.isEmpty())
+            throw new com.henriquericcio.contacts.adapters.api.NotFoundException();
+
+        return contact.get();
     }
 }

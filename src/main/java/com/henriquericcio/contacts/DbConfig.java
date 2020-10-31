@@ -35,7 +35,7 @@ public class DbConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan("com.henriquericcio.contacts.adapters.persistence");
+        em.setPackagesToScan("com.henriquericcio.contacts.adapters.persistence","com.henriquericcio.contacts.adapters.api");
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setJpaProperties(additionalProperties());
         return em;
