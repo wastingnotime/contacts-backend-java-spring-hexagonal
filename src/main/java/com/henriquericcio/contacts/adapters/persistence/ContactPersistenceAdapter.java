@@ -6,6 +6,7 @@ import com.henriquericcio.contacts.outbound.SaveContact;
 import com.henriquericcio.contacts.outbound.UpdateContact;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -18,7 +19,7 @@ public class ContactPersistenceAdapter implements SaveContact, UpdateContact, De
     public void save(Contact contact) {
         log.info("Trying to save {}",contact.getId().getValue());
 
-        contactRepository.save(ContactEntity.of(contact));
+        contactRepository.save(ContactMapper.INSTANCE.toJpaEntity(contact));
     }
 
     @Override
@@ -28,6 +29,6 @@ public class ContactPersistenceAdapter implements SaveContact, UpdateContact, De
 
     @Override
     public void update(Contact contact) {
-        contactRepository.save(ContactEntity.of(contact));
+        contactRepository.save(ContactMapper.INSTANCE.toJpaEntity(contact));
     }
 }
