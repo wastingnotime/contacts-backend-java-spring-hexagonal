@@ -1,11 +1,11 @@
 package com.henriquericcio.contacts.adapters.api;
 
-import lombok.Data;
+import lombok.Value;
 
-@Data
+@Value
 public class ContactPayload {
-    private final String firstName;
-    private final String phoneNumber;
-    private final String lastName;
+    String firstName;
+    String phoneNumber;
+    String lastName;
 }
 
