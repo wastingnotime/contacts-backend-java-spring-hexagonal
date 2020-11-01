@@ -1,5 +1,7 @@
 package com.henriquericcio.contacts.adapters.api;
 
+import com.henriquericcio.contacts.adapters.api.query.Contact;
+import com.henriquericcio.contacts.adapters.api.query.ContactQuery;
 import com.henriquericcio.contacts.inbound.CreateContactUseCase;
 import com.henriquericcio.contacts.inbound.DeleteContactUseCase;
 import com.henriquericcio.contacts.inbound.UpdateContactUseCase;
@@ -21,7 +23,8 @@ public class ContactController {
     private final CreateContactUseCase createContactUseCase;
     private final DeleteContactUseCase deleteContactUseCase;
     private final UpdateContactUseCase updateContactUseCase;
-    private final ContactRepository2 contactRepository2;
+    private final ContactQuery contactQuery;
+
 
     @PostMapping
     public ResponseEntity<?> addContact(@RequestBody ContactPayload contact) {
@@ -62,13 +65,13 @@ public class ContactController {
 
     @GetMapping
     public Iterable<Contact> getAllContacts() {
-        return contactRepository2.findAll();
+        return contactQuery.findAll();
     }
 
     @SneakyThrows
     @GetMapping(path = "{id}")
     public Contact getContactById(@PathVariable("id") String id) {
-        val contact = contactRepository2.findById(id);
+        val contact = contactQuery.findById(id);
         if (contact.isEmpty())
             throw new com.henriquericcio.contacts.adapters.api.NotFoundException();
 
