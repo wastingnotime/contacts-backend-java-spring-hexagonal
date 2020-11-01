@@ -14,12 +14,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ContactPersistenceAdapter implements SaveContact, UpdateContact, DeleteContact {
     private final ContactRepository contactRepository;
+    private final ContactMapper contactMapper;
 
     @Override
     public void save(Contact contact) {
         log.info("Trying to save {}",contact.getId().getValue());
 
-        contactRepository.save(ContactMapper.INSTANCE.toJpaEntity(contact));
+        contactRepository.save(contactMapper.toJpaEntity(contact));
     }
 
     @Override
@@ -29,6 +30,6 @@ public class ContactPersistenceAdapter implements SaveContact, UpdateContact, De
 
     @Override
     public void update(Contact contact) {
-        contactRepository.save(ContactMapper.INSTANCE.toJpaEntity(contact));
+        contactRepository.save(contactMapper.toJpaEntity(contact));
     }
 }
