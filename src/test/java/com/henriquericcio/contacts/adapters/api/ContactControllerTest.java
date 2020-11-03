@@ -1,7 +1,10 @@
 package com.henriquericcio.contacts.adapters.api;
 
+import com.henriquericcio.contacts.adapters.api.query.ContactQuery;
 import com.henriquericcio.contacts.entities.Contact;
 import com.henriquericcio.contacts.inbound.CreateContactUseCase;
+import com.henriquericcio.contacts.inbound.DeleteContactUseCase;
+import com.henriquericcio.contacts.inbound.UpdateContactUseCase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -22,6 +25,16 @@ public class ContactControllerTest {
 
     @MockBean
     private CreateContactUseCase createContactUseCase;
+
+    @MockBean
+    private DeleteContactUseCase deleteContactUseCase;
+
+    @MockBean
+    private UpdateContactUseCase updateContactUseCase;
+
+    @MockBean
+    private ContactQuery contactQuery;
+
 
     @Test
     void given_empty_payload_should_returns_400() throws Exception {
