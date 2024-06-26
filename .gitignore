@@ -1,9 +1,10 @@
 # ide
-.idea/
+.idea
+.vscode
 *.iml
 
 # maven
-target/
+target
 
 #database
 contacts.db
