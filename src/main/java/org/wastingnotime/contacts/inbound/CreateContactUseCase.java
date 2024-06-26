@@ -1,11 +1,10 @@
 package org.wastingnotime.contacts.inbound;
 
+import jakarta.validation.constraints.NotNull;
 import org.wastingnotime.contacts.common.SelfValidating;
 import org.wastingnotime.contacts.entities.Contact;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
-
-import javax.validation.constraints.NotNull;
 
 public interface CreateContactUseCase {
     Contact.ContactId create(CreateContactCommand command);

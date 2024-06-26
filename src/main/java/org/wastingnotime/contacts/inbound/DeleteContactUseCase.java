@@ -1,11 +1,10 @@
 package org.wastingnotime.contacts.inbound;
 
+import jakarta.validation.constraints.NotNull;
 import org.wastingnotime.contacts.common.SelfValidating;
 import org.wastingnotime.contacts.inbound.common.NotFoundException;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
-
-import javax.validation.constraints.NotNull;
 
 public interface DeleteContactUseCase {
     void delete(DeleteContactCommand command) throws NotFoundException;
