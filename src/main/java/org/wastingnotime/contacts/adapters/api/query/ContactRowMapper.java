@@ -10,9 +10,9 @@ import java.sql.SQLException;
 public class ContactRowMapper implements RowMapper<Contact> {
     @Override
     public Contact mapRow(ResultSet rs, int i) throws SQLException {
-        return new Contact(rs.getString("ID"),
-                rs.getString("FIRSTNAME"),
-                rs.getString("PHONENUMBER"),
-                rs.getString("LASTNAME"));
+        return new Contact(rs.getString("id"),
+                rs.getString("first_name"),
+                rs.getString("phone_number"),
+                rs.getString("last_name"));
     }
 }
